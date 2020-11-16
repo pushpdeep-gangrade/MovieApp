@@ -263,7 +263,7 @@ public class MainActivity extends AppCompatActivity {
 
         Spinner filter_by_spinner = (Spinner) dialoglayout.findViewById(R.id.filter_filter_by_spinner);
         Spinner condition_spinner = (Spinner) dialoglayout.findViewById(R.id.filter_condition_spinner);
-        Button filter_button = (Button) dialoglayout.findViewById(R.id.filter_filter_button);
+        Button filter_button = (Button) dialoglayout.findViewById(R.id.button2);//filter_filter_button); //filter_filter_button is the constraint layout not the button
         EditText condition_text = (EditText) dialoglayout.findViewById(R.id.filter_condition_text);
 
         ArrayAdapter<String> adapterSort = new ArrayAdapter<String>(MainActivity.this,
