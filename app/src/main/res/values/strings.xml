@@ -1,3 +1,23 @@
 <resources>
     <string name="app_name">MovieApp</string>
+    <string name="login_text">Login</string>
+    <string name="email_hint">Email</string>
+    <string name="password_hint">Password</string>
+    <string name="signup_text">Sign Up</string>
+    <string name="reenter_password_hint">Re-enter Password</string>
+    <string name="cancel_button_text">Cancel</string>
+    <string name="load_more_button">Load More</string>
+    <string name="sort_button">Sort Actors</string>
+    <string name="filter_button">Filter Actors</string>
+    <string name="sort_by_text">Sort By:</string>
+    <string name="order_text">Order:</string>
+    <string name="sort_text">Sort</string>
+    <string name="profession_text">Primary Profession:</string>
+    <string name="birth_year_text">Birth Year:</string>
+    <string name="death_year_text">Death Year:</string>
+    <string name="movie_list_text">Movie List</string>
+    <string name="filter_text">Name, Year, etc.</string>
+    <string name="filter_by_text">Filter By:</string>
+    <string name="filter_actor_text">Filter Actors</string>
+    <string name="filter_button_text">Filter</string>
 </resources>

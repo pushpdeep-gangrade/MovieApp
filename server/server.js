@@ -115,10 +115,14 @@ app.post('/v1/user/login', function (req, res) {
 });
 
 //get all enrolled users
-app.get('/v1/actors', authMiddleware, function (req, res) {
+app.post('/v1/actors', authMiddleware, function (req, res) {
     if (typeof req.body.skips === "undefined" || typeof req.body.limit === "undefined" ||
         typeof req.body.filters === "undefined" || typeof req.body.sortMethod === "undefined") {
-        res.status(BAD_REQUEST).send("Bad request Check request Body");
+         console.log("skips: ", req.body.skips,
+                    "\nlimit: ", req.body.limit,
+                    "\nfilters: ", req.body.filters,
+                    "\nsortAttribute: ", req.body.sortMethod);
+         res.status(BAD_REQUEST).send("Bad request Check request Body");
     } else {
 
         // console.log("skips: ", req.body.skips,
