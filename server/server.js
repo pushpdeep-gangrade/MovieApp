@@ -136,9 +136,13 @@ app.post('/v1/actors', authMiddleware, function (req, res) {
         });
         client.connect().then(() => {
             var myObj = req.body.filters;
+            myObj = JSON.parse(myObj);
             console.log("myObj: ", myObj);
 
             var mySort = req.body.sortMethod;
+            mySort = JSON.parse(mySort);
+            console.log("mySort: ", mySort);
+
 
             client.db('DataManagement').collection('Movies').find(myObj).sort(mySort).skip(parseInt(req.body.skips)).limit(parseInt(req.body.limit)).toArray(function (err, result) {
                 if (err)

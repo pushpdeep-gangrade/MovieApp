@@ -18,8 +18,14 @@ public class Actor {
     public String profession;
 
     @ColumnInfo(name = "b_Year")
-    public int bYear;
+    public String bYear;
 
     @ColumnInfo(name = "d_Year")
     public String dYear;
+
+    @ColumnInfo(name = "active_status")
+    public String activeStatus;
+
+    @ColumnInfo(name = "personal_status")
+    public String personalStatus;
 }
