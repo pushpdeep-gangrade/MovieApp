@@ -52,7 +52,7 @@ import cz.msebera.android.httpclient.Header;
 public class MainActivity extends AppCompatActivity {
     private static final String AUTH_KEY = "authorizationkey";
     private String mAuthorizationkey;
-    public static final String url = "http://10.0.2.2:3000/v1/actors";
+    public static final String url = "http://104.248.113.55:3001/v1/actors";
     List<Actor> currentActors = new ArrayList<>();
     Button sort;
     RecyclerView movieList;
