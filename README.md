@@ -7,15 +7,14 @@
 - Rockford Stoller
 
 ## Video Demo <a name="demo"></a>
+https://youtu.be/BbX7ewd0OV8
 
 ## Project Wiki <a name="wiki"></a>
 
-### Goals (due 11/18/2020 at 7pm)
-In this assignment you are going to handle the retrieval and listing of large data in mobile app.
-The goal of this  assignment is to the provide the following requirements:
-
-- Locate a dataset that has at least 10,000 rows, with at least 3 attributes not including the id.
-  The data should be imported into your server in a database.
+This assignment handles the retrieval and listing of large data in mobile apps.
+The movie app implements these features:
+- A dataset with at least 10,000 rows was imported into our server in a database. Attributes include
+  each person's name, profession, birth and death year.
 - Create an API that provides a list of items extracted from the records stored on the server.
 - Create a mobile application the enables the listing of the users in a ListView/RecyclerView. The main
   requirement is that the list should only present 50 records at any given time.
