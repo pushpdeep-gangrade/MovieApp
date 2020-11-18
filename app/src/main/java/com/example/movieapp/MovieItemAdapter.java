@@ -89,12 +89,22 @@ public class MovieItemAdapter extends RecyclerView.Adapter<MovieItemViewHolder> 
         actorBYear.setText(String.valueOf(actor.bYear));
         actorDYear.setText(String.valueOf(actor.dYear));
 
-        if(actor.personalStatus.equals("favorite")){
+       /* if(actor.personalStatus.equals("favorite")){
             favorite.setChecked(true);
         }
         else{
             favorite.setChecked(false);
+        }*/
+
+        boolean favorited = false;
+
+        for(int i = 0; i < db.actorDAO().getFavorites().size(); i++){
+            if(actor.id.equals(db.actorDAO().getFavorites().get(i).id)){
+                favorited = true;
+            }
         }
+
+        favorite.setChecked(favorited);
 
         /*favorite.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -116,11 +126,15 @@ public class MovieItemAdapter extends RecyclerView.Adapter<MovieItemViewHolder> 
                 //favorite.setChecked(!favorite.isChecked());
                 if(favorite.isChecked()){
                     actor.personalStatus = "favorite";
-                    db.actorDAO().updateStatus(actor);
+                    //db.actorDAO().updateStatus(actor);
+                    db.actorDAO().insertOne(actor);
+                    actorArrayList.set(position, actor);
                 }
                 else{
                     actor.personalStatus = "general";
-                    db.actorDAO().updateStatus(actor);
+                    //db.actorDAO().updateStatus(actor);
+                    db.actorDAO().delete(actor);
+                    actorArrayList.set(position, actor);
                     if(loadFavorites){
                         actorArrayList = db.actorDAO().getFavorites();
                         setMovieItemRecyclerView();
@@ -136,30 +150,33 @@ public class MovieItemAdapter extends RecyclerView.Adapter<MovieItemViewHolder> 
             }
         });
 
-        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setMessage("Delete this record?")
-                        .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                db.actorDAO().delete(actor);
-                                actorArrayList.remove(actor);
-                                setMovieItemRecyclerView();
-                            }
-                        })
-                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
+        if(loadFavorites){
+            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setMessage("Delete this record?")
+                            .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    db.actorDAO().delete(actor);
+                                    actorArrayList.remove(actor);
+                                    setMovieItemRecyclerView();
+                                }
+                            })
+                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
 
-                            }
-                        });
+                                }
+                            });
 
-                builder.create();
-                builder.show();
+                    builder.create();
+                    builder.show();
 
-                return false;
-            }
-        });
+                    return false;
+                }
+            });
+        }
+
 
     }
 
