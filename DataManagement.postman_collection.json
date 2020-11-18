@@ -1,0 +1,117 @@
+{
+	"info": {
+		"_postman_id": "ae2458d8-4f5c-4576-86ee-aa401c2b4397",
+		"name": "DataManagement",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://104.248.113.55:3001/v1/actors",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "authorizationkey",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1X2lkIjoiNWZiMDg5NTUxNmIwYzk1YzJkOWJkODUwIiwiaWF0IjoxNjA1NDEzNzg5LCJleHAiOjE2MDU0MTczODl9.xhmCAz0eqPyq-RJ5oGIb3Y_9bqdko3QWz7J7fiWqGRQ",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"skips\":0,\r\n    \"limit\":50,\r\n    \"filters\":{\r\n        \"birthYear\":{\"$gt\":1924},\r\n        \"$or\":[\r\n            {\r\n                \"deathYear\":2014\r\n            },\r\n            {\r\n                \"deathYear\":2015\r\n            }\r\n        ]\r\n    },\r\n    \"sortMethod\":{\r\n        \"deathYear\":-1,\r\n        \"primaryName\":1\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://104.248.113.55:3001/v1/actors",
+					"protocol": "http",
+					"host": [
+						"104",
+						"248",
+						"113",
+						"55"
+					],
+					"port": "3001",
+					"path": [
+						"v1",
+						"actors"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://104.248.113.55:3001/v1/user/login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"ronmcdon@email.com\",\r\n    \"password\":\"password\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://104.248.113.55:3001/v1/user/login",
+					"protocol": "http",
+					"host": [
+						"104",
+						"248",
+						"113",
+						"55"
+					],
+					"port": "3001",
+					"path": [
+						"v1",
+						"user",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://104.248.113.55:3001/v1/user/login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"postman@email.com\",\r\n    \"password\":\"postman\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://104.248.113.55:3001/v1/user/signup",
+					"protocol": "http",
+					"host": [
+						"104",
+						"248",
+						"113",
+						"55"
+					],
+					"port": "3001",
+					"path": [
+						"v1",
+						"user",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
