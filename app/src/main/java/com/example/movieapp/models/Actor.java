@@ -6,6 +6,8 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.List;
+
 @Entity
 public class Actor {
     @PrimaryKey @NonNull
@@ -28,4 +30,5 @@ public class Actor {
 
     @ColumnInfo(name = "personal_status")
     public String personalStatus;
+
 }

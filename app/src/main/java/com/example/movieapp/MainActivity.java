@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
     String conditionEditText = "";
     int loadMoreSkip = 0;
     EditText conditionEdit;
-    Button loadMore, loadPrevious;
+    Button loadMore, loadPrevious, loadFavorites;
     boolean useSort = false, useFilter = false;
     AppDatabase db = null;
 
@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
         movieList = findViewById(R.id.main_recyclerView);
         loadMore = findViewById(R.id.main_load_more_button);
         loadPrevious = findViewById(R.id.main_load_previous_button);
+        loadFavorites = findViewById(R.id.main_load_favorites_button);
 
         db = Room.databaseBuilder(getApplicationContext(),
                 AppDatabase.class, "movieDB").allowMainThreadQueries().build();
@@ -86,17 +87,17 @@ public class MainActivity extends AppCompatActivity {
             mAuthorizationkey = sharedPref.getString("authKey","");
             Log.d("mauth", mAuthorizationkey);
 
-            loadMoreSkip = sharedPref.getInt("loadMoreSkip",0);
-            Log.d("Load More Skip", String.valueOf(loadMoreSkip));
+            /*loadMoreSkip = sharedPref.getInt("loadMoreSkip",0);
+            Log.d("Load More Skip", String.valueOf(loadMoreSkip));*/
 
             if(db.actorDAO().getAll().size() == 0){
                 loadInitialActors();
             }
             else{
-                setMovieItemRecyclerView();
+                setMovieItemRecyclerView(db.actorDAO().getCurrent(), false);
             }
 
-            if(loadMoreSkip > 0){
+            if(db.actorDAO().getPrevious().size() > 0){
                 loadPrevious.setVisibility(View.VISIBLE);
             }
             else{
@@ -118,6 +119,25 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        loadFavorites.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(loadFavorites.getText().toString().equals("Load Favorites")){
+                    setMovieItemRecyclerView(db.actorDAO().getFavorites(), true);
+                    loadFavorites.setText("Load General");
+                    loadPrevious.setVisibility(View.GONE);
+
+                }
+                else if(loadFavorites.getText().toString().equals("Load General")){
+                    setMovieItemRecyclerView(db.actorDAO().getCurrent(), false);
+                    loadFavorites.setText("Load Favorites");
+                    if(db.actorDAO().getPrevious().size() > 0){
+                        loadPrevious.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+        });
+
         loadMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -133,10 +153,10 @@ public class MainActivity extends AppCompatActivity {
                 loadElements(true);
                 loadPrevious.setVisibility(View.VISIBLE);
 
-                sharedPref.edit().putInt("loadMoreSkip", loadMoreSkip).commit();
+               /* sharedPref.edit().putInt("loadMoreSkip", loadMoreSkip).commit();
 
                 loadMoreSkip = sharedPref.getInt("loadMoreSkip",0);
-                Log.d("Load More Skip", String.valueOf(loadMoreSkip));
+                Log.d("Load More Skip", String.valueOf(loadMoreSkip));*/
             }
         });
 
@@ -145,7 +165,23 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 loadMoreSkip -= 50;
 
-                if(loadMoreSkip >= 0 && db.actorDAO().getPrevious().size() == 0){
+                if(loadMoreSkip < 0){
+                    loadMoreSkip = 0;
+                }
+
+                db.actorDAO().deleteAll(db.actorDAO().getCurrent());
+                ArrayList<Actor> updated = new ArrayList<>();
+                for(int i = 0; i < db.actorDAO().getPrevious().size(); i++){
+                    Actor actor = db.actorDAO().getPrevious().get(i);
+                    actor.activeStatus = "current";
+                    updated.add(actor);
+                }
+                db.actorDAO().updateAllStatus(updated);
+                loadElements(false);
+                loadPrevious.setVisibility(View.GONE);
+
+
+            /*    if(loadMoreSkip >= 0 && db.actorDAO().getPrevious().size() == 0){
                     db.actorDAO().deleteAll(db.actorDAO().getCurrent());
                     loadElements(true);
                 }
@@ -168,18 +204,8 @@ public class MainActivity extends AppCompatActivity {
                 sharedPref.edit().putInt("loadMoreSkip", loadMoreSkip).commit();
 
                 loadMoreSkip = sharedPref.getInt("loadMoreSkip",0);
-                Log.d("Load More Skip", String.valueOf(loadMoreSkip));
+                Log.d("Load More Skip", String.valueOf(loadMoreSkip));*/
 
-                /*db.actorDAO().deleteAll(db.actorDAO().getCurrent());
-                ArrayList<Actor> updated = new ArrayList<>();
-                for(int i = 0; i < db.actorDAO().getPrevious().size(); i++){
-                    Actor actor = db.actorDAO().getPrevious().get(i);
-                    actor.activeStatus = "current";
-                    updated.add(actor);
-                }
-                db.actorDAO().updateAllStatus(updated);
-                loadElements(false);
-                loadPrevious.setVisibility(View.GONE);*/
 
             }
         });
@@ -205,6 +231,7 @@ public class MainActivity extends AppCompatActivity {
                             try {
                                 JSONArray actorArray = new JSONArray(response);
                                 currentActors.clear();
+                                loadMoreSkip = 0;
 
                                 for(int i = 0; i < actorArray.length(); i++){
                                     JSONObject actorObject = actorArray.getJSONObject(i);
@@ -236,7 +263,7 @@ public class MainActivity extends AppCompatActivity {
 
                                 }
 
-                                setMovieItemRecyclerView();
+                                setMovieItemRecyclerView(db.actorDAO().getCurrent(), false);
 
                                 Log.d("Actors", db.actorDAO().getAll().toString());
                             } catch (JSONException e) {
@@ -397,7 +424,7 @@ public class MainActivity extends AppCompatActivity {
 
                                 currentActors = db.actorDAO().getCurrent();
 
-                                setMovieItemRecyclerView();
+                                setMovieItemRecyclerView(db.actorDAO().getCurrent(), false);
 
                                 Log.d("Actors", currentActors.toString());
 
@@ -429,13 +456,13 @@ public class MainActivity extends AppCompatActivity {
         );
     }
 
-    public void setMovieItemRecyclerView(){
+    public void setMovieItemRecyclerView(List<Actor> actorList, boolean loadFavorites){
         // use a linear layout manager
         LinearLayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
         movieList.setLayoutManager(layoutManager);
 
         final MovieItemAdapter ad = new MovieItemAdapter(MainActivity.this,
-                android.R.layout.simple_list_item_1, db.actorDAO().getCurrent(),  mAuthorizationkey);
+                android.R.layout.simple_list_item_1, actorList,  mAuthorizationkey, db, movieList, loadFavorites);
 
         movieList.setAdapter(ad);
     }

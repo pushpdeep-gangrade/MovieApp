@@ -22,8 +22,8 @@ public interface ActorDAO {
     @Query("SELECT * FROM actor WHERE actor.active_status = 'previous'")
     List<Actor> getPrevious();
 
-    @Query("SELECT * FROM actor WHERE actor.personal_status = 'personal'")
-    List<Actor> getPersonal();
+    @Query("SELECT * FROM actor WHERE actor.personal_status = 'favorite'")
+    List<Actor> getFavorites();
 
     @Update
     void updateStatus(Actor actor);

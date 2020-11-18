@@ -25,4 +25,6 @@
     <string name="use_sort_switch_text">Use Sort</string>
     <string name="use_filter_switch_text">Use Filter</string>
     <string name="load_previous_button_text">Load Previous</string>
+    <string name="favorite_checkbox_text">Favorite</string>
+    <string name="load_favorite_button_text">Load Favorites</string>
 </resources>
