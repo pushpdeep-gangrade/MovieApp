@@ -1,18 +1,10 @@
 # MovieApp
 
-# Table of Contents
-- [Authors](#authors)
-- [App Mockup](#mockup)
-- [Video Demo](#demo)
-- [Project Wiki](#wiki)
-
 ## Authors <a name="authors"></a>
 - Pushpdeep Gangrade
 - Katy Mitchell
 - Valerie Ray
 - Rockford Stoller
-
-## App Mockup <a name="mockup"></a>
 
 ## Video Demo <a name="demo"></a>
 
