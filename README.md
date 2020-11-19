@@ -41,51 +41,51 @@ The movie app implements these features:
 
 Signup (POST):
 - URL:
-'''
+```
 http://104.248.113.55:3001/v1/user/signup
-'''
+```
 - Body:
-'''
+```
 {
     "email":"ronmcdon@email.com",
     "password":"password"
 }
-'''
+```
 - Response:
-'''
+```
 Signed Up Successfully
-'''
+```
 
 Login (POST):
 - URL:
-'''
+```
 http://104.248.113.55:3001/v1/user/login
-'''
+```
 - Body:
-'''
+```
 {
     "email":"ronmcdon@email.com",
     "password":"password"
 }
-'''
+```
 - Response:
-'''
+```
 Login Successful
-'''
+```
 
 Actors (POST):
 - URL:
-'''
+```
 http://104.248.113.55:3001/v1/actors
-'''
+```
 - Header:
-'''
+```
 {
 authorizationkey: KEY
 }
-'''
+```
 - Body:
-'''
+```
 {
     "skips":"0",
     "limit":"50",
@@ -100,9 +100,9 @@ authorizationkey: KEY
                   "primaryName": 1
                 }"
 }
-'''
+```
 - Response:
-'''
+```
 [
     {
         "_id": "5fadd6a7091ac1be5d9ce679",
@@ -124,7 +124,7 @@ authorizationkey: KEY
     },
     ...........
 ]
-'''
+```
 
 ### Submission should include:
 
