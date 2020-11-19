@@ -41,37 +41,90 @@ The movie app implements these features:
 
 Signup (POST):
 - URL:
+'''
 http://104.248.113.55:3001/v1/user/signup
+'''
 - Body:
+'''
 {
     "email":"ronmcdon@email.com",
     "password":"password"
 }
+'''
 - Response:
+'''
 Signed Up Successfully
+'''
 
 Login (POST):
 - URL:
+'''
 http://104.248.113.55:3001/v1/user/login
+'''
 - Body:
+'''
 {
     "email":"ronmcdon@email.com",
     "password":"password"
 }
+'''
 - Response:
+'''
 Login Successful
+'''
 
 Actors (POST):
 - URL:
+'''
 http://104.248.113.55:3001/v1/actors
+'''
 - Header:
+'''
 {
 authorizationkey: KEY
 }
+'''
 - Body:
-????????????
+'''
+{
+    "skips":"0",
+    "limit":"50",
+    "filters": "{
+                "$and": [
+                  {
+                  "birthYear": {"$gte": 1950}
+                  }
+                ]
+            }",
+    "sortMethod":"{
+                  "primaryName": 1
+                }"
+}
+'''
 - Response:
-????????????
+'''
+[
+    {
+        "_id": "5fadd6a7091ac1be5d9ce679",
+        "nconst": "nm0007289",
+        "primaryName": "A-Trak",
+        "birthYear": 1982,
+        "deathYear": "\\N",
+        "primaryProfession": "soundtrack,actor",
+        "knownForTitles": "tt2294449,tt1674771,tt5164432,tt1636826"
+    },
+    {
+        "_id": "5fadd727091ac1be5d9dd7b0",
+        "nconst": "nm0072200",
+        "primaryName": "A. Jonathan Benny",
+        "birthYear": 1970,
+        "deathYear": "\\N",
+        "primaryProfession": "camera_department,cinematographer,assistant_director",
+        "knownForTitles": "tt4878326,tt5689068,tt6106704,tt5292622"
+    },
+    ...........
+]
+'''
 
 ### Submission should include:
 
