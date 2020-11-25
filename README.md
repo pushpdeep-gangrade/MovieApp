@@ -26,6 +26,7 @@ The movie app implements these features:
   the first 50 records are displayed based on the selected key.
 - Filtering feature: The user can filter the results based on a given attribute.
 
+<<<<<<< HEAD
 
 ### Backend Design
 - The 'Actor' API provides a list of items extracted from the records stored on the server.
@@ -35,3 +36,106 @@ The movie app implements these features:
   Instead of retrieving all the 10,000+ entries, the API addresses the paging and sorting requirements.
 - Local Storage: The app uses local storage via Room framework to store data. The app provides
   a feature where the user is able to store data locally, retrieve, delete and display them.
+=======
+## API Documentation <a name="api"></a>
+
+Signup (POST):
+- URL:
+```
+http://104.248.113.55:3001/v1/user/signup
+```
+- Body:
+```
+{
+    "email":"ronmcdon@email.com",
+    "password":"password"
+}
+```
+- Response:
+```
+Signed Up Successfully
+```
+
+Login (POST):
+- URL:
+```
+http://104.248.113.55:3001/v1/user/login
+```
+- Body:
+```
+{
+    "email":"ronmcdon@email.com",
+    "password":"password"
+}
+```
+- Response:
+```
+Login Successful
+```
+
+Actors (POST):
+- URL:
+```
+http://104.248.113.55:3001/v1/actors
+```
+- Header:
+```
+{
+authorizationkey: KEY
+}
+```
+- Body:
+```
+{
+    "skips":"0",
+    "limit":"50",
+    "filters": "{
+                "$and": [
+                  {
+                  "birthYear": {"$gte": 1950}
+                  }
+                ]
+            }",
+    "sortMethod":"{
+                  "primaryName": 1
+                }"
+}
+```
+- Response:
+```
+[
+    {
+        "_id": "5fadd6a7091ac1be5d9ce679",
+        "nconst": "nm0007289",
+        "primaryName": "A-Trak",
+        "birthYear": 1982,
+        "deathYear": "\\N",
+        "primaryProfession": "soundtrack,actor",
+        "knownForTitles": "tt2294449,tt1674771,tt5164432,tt1636826"
+    },
+    {
+        "_id": "5fadd727091ac1be5d9dd7b0",
+        "nconst": "nm0072200",
+        "primaryName": "A. Jonathan Benny",
+        "birthYear": 1970,
+        "deathYear": "\\N",
+        "primaryProfession": "camera_department,cinematographer,assistant_director",
+        "knownForTitles": "tt4878326,tt5689068,tt6106704,tt5292622"
+    },
+    ...........
+]
+```
+
+### Submission should include:
+
+- ~~Create a Github or Bitbucket repo for the assignment.~~
+- ~~Push your code to the created repo. Should contain all your code.~~
+- ~~On the same repo create a wiki page describing your api design and implementation. The wiki page
+  should describe the API routes, DB Schema and all the assumptions required to provide
+  authentication. In addition describe any data that is stored on the device or on the server.
+- ~~Include the Postman file in the repo.
+- ~~If you used custom APIs you should demo your API using the Postman Chrome Plugin. The API should
+  be demonstrated using Postman, you should create an api component in Postman for each of your created APIs.
+- ~~Demo your API using a mobile app that uses your implemented api.~~
+- A 5 minute (max) screencast to demo your application.
+>>>>>>> 221c9b7f93152bda5b76a944b1b042000f54a8a0
