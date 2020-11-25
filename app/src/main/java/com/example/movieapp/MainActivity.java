@@ -90,19 +90,19 @@ public class MainActivity extends AppCompatActivity {
             /*loadMoreSkip = sharedPref.getInt("loadMoreSkip",0);
             Log.d("Load More Skip", String.valueOf(loadMoreSkip));*/
 
-            if(db.actorDAO().getAll().size() == 0){
-                loadInitialActors();
-            }
-            else{
-                setMovieItemRecyclerView(db.actorDAO().getCurrent(), false);
-            }
+            //db.actorDAO().deleteAll(db.actorDAO().getAll());
 
-            if(db.actorDAO().getPrevious().size() > 0){
+            loadInitialActors();
+
+            loadPrevious.setVisibility(View.GONE);
+
+
+            /*if(db.actorDAO().getPrevious().size() > 0){
                 loadPrevious.setVisibility(View.VISIBLE);
             }
             else{
                 loadPrevious.setVisibility(View.GONE);
-            }
+            }*/
         }
 
         sort.setOnClickListener(new View.OnClickListener() {
@@ -126,12 +126,14 @@ public class MainActivity extends AppCompatActivity {
                     setMovieItemRecyclerView(db.actorDAO().getFavorites(), true);
                     loadFavorites.setText("Load General");
                     loadPrevious.setVisibility(View.GONE);
+                    loadMore.setVisibility(View.GONE);
 
                 }
                 else if(loadFavorites.getText().toString().equals("Load General")){
-                    setMovieItemRecyclerView(db.actorDAO().getCurrent(), false);
+                    setMovieItemRecyclerView(currentActors, false);
                     loadFavorites.setText("Load Favorites");
-                    if(db.actorDAO().getPrevious().size() > 0){
+                    loadMore.setVisibility(View.VISIBLE);
+                    if(loadMoreSkip > 0){
                         loadPrevious.setVisibility(View.VISIBLE);
                     }
                 }
@@ -142,14 +144,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 loadMoreSkip += 50;
-                db.actorDAO().deleteAll(db.actorDAO().getPrevious());
+               /* db.actorDAO().deleteAll(db.actorDAO().getPrevious());
                 ArrayList<Actor> updated = new ArrayList<>();
                 for(int i = 0; i < db.actorDAO().getCurrent().size(); i++){
                     Actor actor = db.actorDAO().getCurrent().get(i);
                     actor.activeStatus = "previous";
                     updated.add(actor);
                 }
-                db.actorDAO().updateAllStatus(updated);
+                db.actorDAO().updateAllStatus(updated);*/
                 loadElements(true);
                 loadPrevious.setVisibility(View.VISIBLE);
 
@@ -165,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 loadMoreSkip -= 50;
 
-                if(loadMoreSkip < 0){
+                /*if(loadMoreSkip < 0){
                     loadMoreSkip = 0;
                 }
 
@@ -176,9 +178,13 @@ public class MainActivity extends AppCompatActivity {
                     actor.activeStatus = "current";
                     updated.add(actor);
                 }
-                db.actorDAO().updateAllStatus(updated);
+                db.actorDAO().updateAllStatus(updated);*/
+
                 loadElements(false);
-                loadPrevious.setVisibility(View.GONE);
+
+               /* if(loadMoreSkip == 0){
+                    loadPrevious.setVisibility(View.GONE);
+                }*/
 
 
             /*    if(loadMoreSkip >= 0 && db.actorDAO().getPrevious().size() == 0){
@@ -259,13 +265,13 @@ public class MainActivity extends AppCompatActivity {
 
                                     currentActors.add(actor);
 
-                                    db.actorDAO().insertOne(actor);
+                                    //db.actorDAO().insertOne(actor);
 
                                 }
 
-                                setMovieItemRecyclerView(db.actorDAO().getCurrent(), false);
+                                setMovieItemRecyclerView(currentActors, false);
 
-                                Log.d("Actors", db.actorDAO().getAll().toString());
+                                Log.d("Actors", currentActors.toString());
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -391,9 +397,10 @@ public class MainActivity extends AppCompatActivity {
                                 JSONArray actorArray = new JSONArray(str);
                                 currentActors.clear();
 
+                                /*
                                 if(!add){
                                     db.actorDAO().deleteAll(db.actorDAO().getCurrent());
-                                }
+                                }*/
 
                                 for(int i = 0; i < actorArray.length(); i++){
                                     JSONObject actorObject = actorArray.getJSONObject(i);
@@ -419,12 +426,14 @@ public class MainActivity extends AppCompatActivity {
                                         actor.dYear = actorObject.getString("deathYear");
                                     }
 
-                                    db.actorDAO().insertOne(actor);
+                                    currentActors.add(actor);
                                 }
 
-                                currentActors = db.actorDAO().getCurrent();
+                                setMovieItemRecyclerView(currentActors, false);
 
-                                setMovieItemRecyclerView(db.actorDAO().getCurrent(), false);
+                                if(loadMoreSkip == 0){
+                                    loadPrevious.setVisibility(View.GONE);
+                                }
 
                                 Log.d("Actors", currentActors.toString());
 
@@ -609,6 +618,10 @@ public class MainActivity extends AppCompatActivity {
         sort_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                loadMoreSkip = 0;
+                loadPrevious.setVisibility(View.GONE);
+                loadFavorites.setText("Load Favorites");
+                loadMore.setVisibility(View.VISIBLE);
                 loadElements(false);
             }
         });

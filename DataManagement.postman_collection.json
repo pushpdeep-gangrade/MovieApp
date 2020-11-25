@@ -7,21 +7,18 @@
 	"item": [
 		{
 			"name": "http://104.248.113.55:3001/v1/actors",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
 			"request": {
-				"method": "GET",
+				"method": "POST",
 				"header": [
 					{
 						"key": "authorizationkey",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1X2lkIjoiNWZiMDg5NTUxNmIwYzk1YzJkOWJkODUwIiwiaWF0IjoxNjA1NDEzNzg5LCJleHAiOjE2MDU0MTczODl9.xhmCAz0eqPyq-RJ5oGIb3Y_9bqdko3QWz7J7fiWqGRQ",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1X2lkIjoiNWZiMDg5NTUxNmIwYzk1YzJkOWJkODUwIiwiaWF0IjoxNjA1NzQzOTA2LCJleHAiOjE2MDU3NDc1MDZ9.9cZc0wK6c9_JM7csp4XuiTnUQ2QQTsmJ8CvSyttvvLk",
 						"type": "text"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"skips\":0,\r\n    \"limit\":50,\r\n    \"filters\":{\r\n        \"birthYear\":{\"$gt\":1924},\r\n        \"$or\":[\r\n            {\r\n                \"deathYear\":2014\r\n            },\r\n            {\r\n                \"deathYear\":2015\r\n            }\r\n        ]\r\n    },\r\n    \"sortMethod\":{\r\n        \"deathYear\":-1,\r\n        \"primaryName\":1\r\n    }\r\n}",
+					"raw": "{\r\n    \"skips\":\"0\",\r\n    \"limit\":\"50\",\r\n    \"filters\":\"{\\\"$and\\\":[{\\\"birthYear\\\":{\\\"$gte\\\":1950}}]}\",\r\n    \"sortMethod\":\"{\\\"primaryName\\\":1}\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
